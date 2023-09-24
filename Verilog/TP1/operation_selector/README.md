@@ -11,6 +11,7 @@ $$o\_dataC = i\_dataA + i\_dataB$$
 $$o\_dataC = i\_dataA\ |\ i\_dataB$$
 $$o\_dataC = i\_dataA \ \&\ i\_dataB$$
 
+
 ----------------------------------
 *Datapath:*
 
