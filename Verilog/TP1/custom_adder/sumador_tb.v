@@ -17,6 +17,9 @@ wire [2*NB_DATA-1:0]  o_data;
 wire                  o_overflow;
 
 sumador 
+#(
+    .NB_DATA(NB_DATA)
+)
     u_sumador
     (
         .i_data1(i_data1),
