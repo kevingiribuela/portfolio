@@ -7,8 +7,11 @@ Design an ALU datapath that performs the following operations in parallel on two
 *Operations*:
 
 $$o\_dataC = i\_dataA - i\_dataB$$
+
 $$o\_dataC = i\_dataA + i\_dataB$$
+
 $$o\_dataC = i\_dataA\ |\ i\_dataB$$
+
 $$o\_dataC = i\_dataA \ \&\ i\_dataB$$
 
 
