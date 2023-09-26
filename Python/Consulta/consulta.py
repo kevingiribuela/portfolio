@@ -56,7 +56,7 @@ for i,v in enumerate(valores):
     print(f"Fondos en {portfolio[i].get('Nombre')}\t${round(float(portfolio[i].get('Cantidad'))*valores[i]*dolar,1)}\t USD {round(float(portfolio[i].get('Cantidad'))*valores[i],1)}")
     sum+=round(float(portfolio[i].get('Cantidad'))*valores[i]*dolar,1)
 
-print(f"Total:\t\t${sum}\t USD {round(sum/dolar,1)}")
+print(f"Total:\t\t${round(sum,1)}\t USD {round(sum/dolar,1)}")
 print("===========================================================")
 print("===========================================================")
 print("Portfolio:")
