@@ -1,13 +1,17 @@
 #include "WebServer.h"
 
-extern bool parametters;
+// WebServer stop flag
+bool *param;
 
 // Homepage handler
 esp_err_t homepage_get_handler(httpd_req_t *req)
 {
+    extern const unsigned char homepage_html_start[] asm("_binary_homepage_html_start");
+    extern const unsigned char homepage_html_end[]   asm("_binary_homepage_html_end");
+    const size_t homepage_html_size = (homepage_html_end - homepage_html_start);
+    
     esp_err_t error;
-    const char *response=(const char*)req->user_ctx;
-    error=httpd_resp_send(req, response,strlen(response));
+    error=httpd_resp_send(req, (const char*)homepage_html_start,homepage_html_size);
     if(error != ESP_OK){
         printf("Error printing the web page in server mode, error code: %d \n",error);
     }
@@ -19,17 +23,29 @@ const httpd_uri_t homepage = {
     .method    = HTTP_GET,
     .handler   = homepage_get_handler,
     
-    .user_ctx  = "<!DOCTYPE html>\
-<html>\
-<body>\
-	<form action=\"/data\" method=\"GET\">\
-      <h1>ESP32 Wi-Fi configuration </h1>\
-        <strong>SSID:</strong> <input type=\"text\" name=\"SSID\"><br>\
-        <strong>PSWD:</strong> <input type=\"text\" name=\"PSWD\"><br><br> \
-        <input type=\"submit\" value=\"Enviar datos\" onclick=\"alert('Datos cargados!')\">\
-  </form>\
-</body>\
-</html>"
+    .user_ctx  = NULL
+};
+
+// Ico handler
+esp_err_t favicon_get_handler(httpd_req_t *req)
+{
+    extern const unsigned char favicon_ico_start[] asm("_binary_favicon_ico_start");
+    extern const unsigned char favicon_ico_end[]   asm("_binary_favicon_ico_end");
+    const size_t favicon_ico_size = (favicon_ico_end - favicon_ico_start);
+    
+    esp_err_t error;
+    error=httpd_resp_send(req, (const char*)favicon_ico_start,favicon_ico_size);
+    if(error != ESP_OK){
+        printf("Error loading the ico: %d \n",error);
+    }
+    return ESP_OK;
+}
+const httpd_uri_t favicon = {
+    .uri       = "/favicon.ico",
+    .method    = HTTP_GET,
+    .handler   = favicon_get_handler,
+    
+    .user_ctx  = NULL
 };
 
 // Data handler
@@ -84,20 +100,21 @@ const httpd_uri_t homepage = {
     nvs_close(my_handle);
     free(query);
     free(buff);
-    parametters=true;
+    *param=true;
     return ESP_OK;
 }
 const httpd_uri_t data = {
     .uri       = "/data",
     .method    = HTTP_GET,
     .handler   = data_get_handler,
-    
+
     .user_ctx  = NULL
 };
 
 // Start WebServer function
-httpd_handle_t start_webserver(void)
+httpd_handle_t start_webserver(bool *parametters_from_main)
 {
+    param = parametters_from_main;
     httpd_handle_t server = NULL;
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.lru_purge_enable = true;
@@ -109,6 +126,7 @@ httpd_handle_t start_webserver(void)
         printf("Registering URI handlers...\n");
         httpd_register_uri_handler(server, &homepage);
         httpd_register_uri_handler(server, &data);
+        httpd_register_uri_handler(server, &favicon);
         printf("Handlers registered! \n");
 
         return server;

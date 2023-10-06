@@ -12,7 +12,7 @@ esp_err_t homepage_get_handler(httpd_req_t *req);
 
 esp_err_t data_get_handler(httpd_req_t *req);
 
-httpd_handle_t start_webserver(void);
+httpd_handle_t start_webserver(bool *);
 
 void stop_webserver(httpd_handle_t server);
 
