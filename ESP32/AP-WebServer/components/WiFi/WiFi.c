@@ -1,10 +1,4 @@
-#include <stdio.h>
 #include "WiFi.h"
-
-#define WIFI_SSID       "UNLP - GyG"
-#define WIFI_PASS       "defiunlp"
-#define WIFI_CHANNEL    1
-#define MAX_STA_CONN    1
 
 esp_netif_t * wifi_init_softap(void){
     // It is recommended firstable initialize the Wi-Fi module with the default configuration
@@ -77,4 +71,83 @@ esp_netif_t* wifi_init_sta(void){
     free(wifi_pswd);
     free(wifi_ssid);
     return wifi_object;
+}
+
+void wifi_event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data){
+    static int retry_conn = 0;
+    EventGroupHandle_t *s_wifi_group = (EventGroupHandle_t *)arg;
+    EventGroupHandle_t s_wifi_event_group = *s_wifi_group;
+    
+    if(event_base == WIFI_EVENT){   // If the event is a WiFi event
+        switch (event_id){
+            case WIFI_EVENT_STA_START:{         // If the ESP started as STA
+                    printf("STARTED AS STA...\n");
+                    printf("CONNECTING TO WIFI...\n");
+                    esp_err_t wifi = esp_wifi_connect();    // Connecting to WiFi
+                    if(wifi!=ESP_OK){
+                        xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
+                        printf("WIFI NOT CONNECTED...\n");
+                    }
+                    break;
+                }
+            case WIFI_EVENT_STA_CONNECTED:{     // If the ESP is connected to an AP
+                printf("SUCCESSFULLY CONNECTED TO AP!\n");
+                printf("WAITING FOR IP...\n");
+                break;
+            }
+            case WIFI_EVENT_STA_DISCONNECTED:{  // If the ESP is disconnected from an AP
+                printf("DISCONNECTED FROM AP!\n");
+                xEventGroupSetBits(s_wifi_event_group, WIFI_DISCONNECTED_BIT);
+                
+                if(retry_conn<MAX_RETRY){
+                    esp_wifi_connect(); // Trying to reconnect
+                    retry_conn++;       // Increment retry counter
+                    printf("RETRY CONNECTION N°: %d OF %d\n", retry_conn, MAX_RETRY);
+                }
+                else{
+                    printf("MAX RETRY REACHED! RESETING LOOP...\n");
+                    xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);  // Flag to reset ESP
+                    retry_conn=0;                                           // Reset retry counter
+                }
+                break;
+            }
+            case WIFI_EVENT_AP_START:{          // If the ESP started as AP
+                printf("STARTED AS AP...\n");
+                break;
+            }
+            case WIFI_EVENT_AP_STOP:{           // If the ESP stopped as AP
+                printf("STOPED AS AP...\n");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+    }
+    else if(event_base == IP_EVENT){                        // If the event is an IP event
+        switch (event_id){
+            case IP_EVENT_STA_GOT_IP:{
+                xEventGroupClearBits(s_wifi_event_group, WIFI_DISCONNECTED_BIT);
+                xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
+                printf("IP OBTAINED!\n\n");
+                retry_conn=0;       // Reset retry counter
+                break;
+            }
+            case IP_EVENT_STA_LOST_IP:{
+                xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
+                printf("IP LOST!\n");
+                break;
+            }
+            default:{
+                break;
+            }
+        }
+    }
+}
+
+bool wait_wifi_event(EventGroupHandle_t wifi){
+    EventBits_t bits = xEventGroupWaitBits(wifi, WIFI_CONNECTED_BIT | WIFI_FAIL_BIT, pdTRUE, pdFALSE, portMAX_DELAY);
+    
+    if(bits & WIFI_CONNECTED_BIT){ return true;}
+    else{return false;}
 }
