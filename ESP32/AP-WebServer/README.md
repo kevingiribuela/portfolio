@@ -32,11 +32,11 @@ In case that you already provided data to the webserver, if the ESP32 detects in
 # TO DO:
 
 - [x] Eliminar la mayor cantidad de variables globales posible.
-- [ ] Embeber archivo HTML en webserver para evitar codigo HTML dentro del código en C (WebServer.c) y modularizar el código. Al final del main.c aparece código de ejemplo copiado y pegado de la página oficial de espressif.
-- [ ] Simplificar y COMPLETAR el decodificar de URL.
+- [x] Embeber archivo HTML en webserver para evitar codigo HTML dentro del código en C (WebServer.c) y modularizar el código. Al final del main.c aparece código de ejemplo copiado y pegado de la página oficial de espressif.
+- [x] Simplificar y COMPLETAR el decodificar de URL.
 - [x] Analizar una posible reducción en cantidad de handlers que tiene el loop event .
 - [x] Limpiar main, modularizar código para facilitar lectura.
 - [x] Modificar variable parametters por dentro del WebServer para evitar el loop infinito
-- [ ] Buscar la forma de que parametters NO sea una variable global dado que la usa WebServer para indicar que se apretó el botón de enviar datos.
+- [x] Buscar la forma de que parametters NO sea una variable global dado que la usa WebServer para indicar que se apretó el botón de enviar datos.
 
 <img src="doc/ayuda.png" width="200" height="200">
