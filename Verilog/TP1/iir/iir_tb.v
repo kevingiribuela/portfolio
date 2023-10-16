@@ -6,7 +6,7 @@
             $finish; \
         end
 
-module fir_tb #(
+module iir_tb #(
     parameter NB_DATA = 8
 );
 
@@ -16,8 +16,8 @@ reg [NB_DATA-1:0]     i_data;
 
 wire [NB_DATA-1:0]  o_data;
 
-fir
-    u_fir
+iir
+    u_iir
     (
         .i_clk(i_clk),
         .i_rst(i_rst),

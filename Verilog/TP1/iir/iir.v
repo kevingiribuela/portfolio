@@ -1,6 +1,6 @@
 `timescale 1ns/1ps 
 
-module fir #(
+module iir #(
     parameter NB_DATA = 8
 )
 (
