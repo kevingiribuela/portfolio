@@ -1,4 +1,4 @@
-module fir #(
+module fir_round #(
     parameter NB_INPUT     = 16,
     parameter NB_OUTPUT    = 18
 )
@@ -70,13 +70,13 @@ assign y0 = sum2;
 generate
     genvar i;
     for (i = 0; i<TRUNCADORES; i=i+1) begin
-        SatTruncFP #(
+        SatRoundFP #(
             .NB_XI  (2*NB_PARTIAL_PROD),    // (32,30)
             .NBF_XI (2*NB_PARTIAL_PROD-2),
 
             .NB_XO  (NB_PARTIAL_PROD),      // (16,15)
             .NBF_XO (NB_PARTIAL_PROD-1)
-        ) sat_trunc
+        ) sat_round
         (
             .i_data(partial_prod[i]),       // (32,30)
             .o_data(trunc_prod[i])          // (16,15)
