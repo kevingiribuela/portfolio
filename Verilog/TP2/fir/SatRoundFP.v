@@ -14,6 +14,7 @@ module SatRoundFP#(
     localparam NBI_XO = NB_XO - NBF_XO;
 
     wire [NB_XO-1:0]    aux_sat;
+    wire [NB_XO:0]      round;
     wire [NBF_XO-1:0]   aux_round;
    
     wire                condicion;
@@ -22,7 +23,8 @@ module SatRoundFP#(
 
     generate
         if (NBF_XI > NBF_XO) begin // Align and sum of LSB of fractional part
-            assign  aux_round = i_data[(NBF_XI-1):(NBF_XI - (NBF_XO+1))] + {{NBF_XO{1'b0}}, 1'b1};
+            assign  round     = i_data[(NBF_XI-1):(NBF_XI - (NBF_XO+1))] + {{NBF_XO{1'b0}}, 1'b1};
+            assign  aux_round = round[NB_XO-:NB_XO];
         end else if (NBF_XI == NBF_XO) begin
             assign  aux_round = i_data[(NBF_XI-1):0];
         end else begin              // Zero padded in case NBF_I < NBF_O
