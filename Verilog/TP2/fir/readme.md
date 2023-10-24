@@ -7,6 +7,18 @@ The filters to be implemented are:
 * FIR filter using round and saturation.
 * FIR filter using folder architechture, round and saturation.
 
+### Considerations
+* We assume that the coefficients and input data are S(16,15).
+
+* The product of multiplications must be truncated for use 18bits adders. 
+
+* An architechture must be proposed assuming that the filter coefficients are simmetrics.
+
+Here is a possible FIR filter architechture
+
+<img src=doc/example.png>
+
+
 -------------------------------------
 ## Block diagrams
 ### Truncation & saturation 
@@ -31,12 +43,25 @@ The last FIR filter, instead of use truncation, round is used.
 
 
 # Testing
-For test the design, a signal was composed using a python script. Futhermore, the Jupyter notebook called "coeff.ipynb" was used to generate the apropiated coefficients for a low pass filter with cut-off frequency of 10kHz
+For test the design, a signal was composed using a python script. Futhermore, the Jupyter notebook called "coeff.ipynb" was used to generate the apropiated coefficients for a low pass filter with cut-off frequency of 10kHz and a (16,15) fixed point representation.
 
 The signal generated was loaded trough an external memory.
 
-$s(t) = sin(2\pi 10000t) + 0.5sin(2\pi 35000t)$
+For test purposes, three signals were generated:
 
-The FIR filter output is shown bellow
+$s_1(t) = sin(2\pi 10000t) + 0.5sin(2\pi 35000t)$
 
-<img src=doc/original_vs_filtered.png>
+$s_2(t) = sin(2\pi 5000t) + 0.5sin(2\pi 20000t)$
+
+$s_2(t) = sin(2\pi 500t) + 0.5sin(2\pi 35000t)$
+
+The FIR filter output for the unfolded and folded architechture for each signal is shown bellow:
+
+### Signal $s_1(t)$
+<img src=doc/s1.png>
+
+### Signal $s_2(t)$
+<img src=doc/s2.png>
+
+### Signal $s_3(t)$
+<img src=doc/s3.png>
