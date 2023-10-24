@@ -6,10 +6,10 @@ module signal_generator #(
    output [NB_DATA-1:0] o_signal
 );
 
-   // Parameters
-   parameter NB_COUNT   = 10;
-   parameter MEM_INIT_FILE = "mem.hex";
-
+   // Localparameters
+   localparam NB_COUNT   = 10;
+   localparam MEM_INIT_FILE = "sig10k_noise35k.hex";
+   
    // Vars
    integer i;
    reg [NB_COUNT - 1 : 0] counter;

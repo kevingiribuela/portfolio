@@ -6,17 +6,17 @@ from tool._fixedInt import *
 
 N = 1024
 #                 S(16,15)
-temp  = DeFixedInt(16,15, signedMode='S', roundMode='trunc', saturateMode='saturate')
+temp  = DeFixedInt(16, 15, signedMode='S', roundMode='trunc', saturateMode='saturate')
 
-filename = 'mem.hex'
+filename = 'sig500_noise35k.hex'
 
 F_noise     = 35000 ### <----------------
-F_signal    = 10000 ### <-----------------
+F_signal    = 500 ### <-----------------
 sample_rate = 80000 ### <---------------
 
 def fun_gen(t):
     noise           = 0.5 * np.sin(2*np.pi*F_noise*t)
-    data            = 1   * np.sin(2*np.pi*F_signal*t)
+    data            = 0.5 * np.sin(2*np.pi*F_signal*t)
     noisy_signal    = data + noise
     return noisy_signal 
 

@@ -12,7 +12,7 @@ module fir_round #(
 
 localparam NB_COEF          = 16;
 localparam NB_PARTIAL_PROD  = 16;
-localparam TRUNCADORES  = 4;
+localparam TRUNCADORES      = 4;
 
 // Coefs
 wire signed [NB_COEF-1:0]   coeff [3:0];
@@ -33,8 +33,8 @@ wire signed [2*NB_PARTIAL_PROD-1 : 0] partial_prod  [3:0];  // (32,30) = (16,15)
 wire signed [NB_PARTIAL_PROD-1   : 0] trunc_prod    [3:0];  // (32,30) --> (16,15)
 
 // Sums
-wire signed [NB_PARTIAL_PROD-1+1 : 0] sum0, sum1;           // (16,15) + (16,15) = (17,15)
-wire signed [NB_PARTIAL_PROD-1+2 : 0] sum2;                 // (17,15) + (17,15) = (18,15)
+wire signed [NB_PARTIAL_PROD-1+1 : 0] sum0, sum1;           // (17,15) = (16,15) + (16,15)
+wire signed [NB_PARTIAL_PROD-1+2 : 0] sum2;                 // (18,15) = (17,15) + (17,15)
 
 always @(posedge i_clk) begin: shift_register
 integer i;

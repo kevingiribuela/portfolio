@@ -38,41 +38,41 @@ fir #(
     );
 
 fir_round #(
-        .NB_INPUT(NB_INPUT),
-        .NB_OUTPUT(NB_OUTPUT)
+       .NB_INPUT(NB_INPUT),
+       .NB_OUTPUT(NB_OUTPUT)
 )
-    u_fir_round(
-        .i_clk(i_clk),
-        .i_rst(i_rst),
-        .i_data(signal),
+   u_fir_round(
+       .i_clk(i_clk),
+       .i_rst(i_rst),
+       .i_data(signal),
 
-        .o_data(filtered_signal_round)
-    );
+       .o_data(filtered_signal_round)
+   );
 
 
 fir_folded #(
-    .NB_INPUT(NB_INPUT),
-    .NB_OUTPUT(NB_OUTPUT)
+   .NB_INPUT(NB_INPUT),
+   .NB_OUTPUT(NB_OUTPUT)
 )
-    u_fir_folded(
-        .i_clk(i_clk),
-        .i_rst(i_rst),
-        .i_data(signal),
+   u_fir_folded(
+       .i_clk(i_clk),
+       .i_rst(i_rst),
+       .i_data(signal),
 
-        .o_data(filtered_signal_folded)
-    );
+       .o_data(filtered_signal_folded)
+   );
 
 fir_folded_round #(
-    .NB_INPUT(NB_INPUT),
-    .NB_OUTPUT(NB_OUTPUT)
+   .NB_INPUT(NB_INPUT),
+   .NB_OUTPUT(NB_OUTPUT)
 )
-    u_fir_folded_round(
-        .i_clk(i_clk),
-        .i_rst(i_rst),
-        .i_data(signal),
+   u_fir_folded_round(
+       .i_clk(i_clk),
+       .i_rst(i_rst),
+       .i_data(signal),
 
-        .o_data(filtered_signal_folded_round)
-    );
+       .o_data(filtered_signal_folded_round)
+   );
 
 signal_generator #(
     .NB_DATA(NB_INPUT)
