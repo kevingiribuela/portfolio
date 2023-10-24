@@ -14,4 +14,5 @@ As I said before, I'm an electronic and telecommunications engineer, proudly gra
 
 My interests lays on digital design, digital signal processing, and telecommunications.
 
+
 <img src="doc/logo_fi.jpg"  width="200" height="200"> <img src="doc/logo_unlp.jpg"  width="170" height="200">
