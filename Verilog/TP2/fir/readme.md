@@ -57,11 +57,11 @@ $s_2(t) = sin(2\pi 500t) + 0.5sin(2\pi 35000t)$
 
 The FIR filter output for the unfolded and folded architechture for each signal is shown bellow:
 
-### Signal $s_1(t)$
+### Signal s1(t)
 <img src=doc/s1.png>
 
-### Signal $s_2(t)$
+### Signal s2(t)
 <img src=doc/s2.png>
 
-### Signal $s_3(t)$
+### Signal s3(t)
 <img src=doc/s3.png>
