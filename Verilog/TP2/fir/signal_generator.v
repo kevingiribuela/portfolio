@@ -8,7 +8,7 @@ module signal_generator #(
 
    // Localparameters
    localparam NB_COUNT   = 10;
-   localparam MEM_INIT_FILE = "sig10k_noise35k.hex";
+   localparam MEM_INIT_FILE = "sig500_noise35k.hex";
    
    // Vars
    integer i;
