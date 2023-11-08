@@ -64,8 +64,8 @@ assign sum[0] = i_data + x[3];                    // (17,15) = (16,15) + (16,15)
 assign sum[1] = x[1]   + x[2];                    // (17,15) = (16,15) + (16,15) -- sum[1] = 18 bits
 assign sum[2] = trunc_prod[0] + trunc_prod[1];    // (18,15) = (17,15) + (17,15) -- sum[2] = 18 bits
 
-assign partial_prod[0] = sum[0] * coeff[0];       // (33,30) = (17,15) * (16,15) -- The MSB of (17,15) is always 0 because the previous sum
-assign partial_prod[1] = sum[1] * coeff[1];       // (33,30) = (17,15) * (16,15) -- The MSB of (17,15) is always 0 because the previous sum
+assign partial_prod[0] = sum[0] * coeff[0];       // (33,30) = (18,15) * (16,15) -- The MSB of (18,15) is always 0 because the previous sum
+assign partial_prod[1] = sum[1] * coeff[1];       // (33,30) = (18,15) * (16,15) -- The MSB of (18,15) is always 0 because the previous sum
 
 assign y0 = sum[2];
 
