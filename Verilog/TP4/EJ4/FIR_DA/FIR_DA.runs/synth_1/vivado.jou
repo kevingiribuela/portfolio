@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2023.1 (64-bit)
+# SW Build 3865809 on Sun May  7 15:04:56 MDT 2023
+# IP Build 3864474 on Sun May  7 20:36:21 MDT 2023
+# SharedData Build 3865790 on Sun May 07 13:33:03 MDT 2023
+# Start of session at: Sun Dec 24 14:51:10 2023
+# Process ID: 39993
+# Current directory: /mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/FIR_DA/FIR_DA.runs/synth_1
+# Command line: vivado -log fir_DA_folded.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source fir_DA_folded.tcl
+# Log file: /mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/FIR_DA/FIR_DA.runs/synth_1/fir_DA_folded.vds
+# Journal file: /mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/FIR_DA/FIR_DA.runs/synth_1/vivado.jou
+# Running On: kevin-Inspiron-3505, OS: Linux, CPU Frequency: 1614.920 MHz, CPU Physical cores: 8, Host memory: 14525 MB
+#-----------------------------------------------------------
+source fir_DA_folded.tcl -notrace

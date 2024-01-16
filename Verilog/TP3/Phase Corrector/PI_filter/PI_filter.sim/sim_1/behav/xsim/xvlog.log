@@ -1,0 +1,8 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/SatTruncFP.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module SatTruncFP
+INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/pi.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module pi
+INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/tb_pi.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_pi
+INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/PI_filter/PI_filter.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

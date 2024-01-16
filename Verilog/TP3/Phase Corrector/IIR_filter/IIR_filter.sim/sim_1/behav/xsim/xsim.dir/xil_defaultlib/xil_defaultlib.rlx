@@ -1,0 +1,8 @@
+0.7
+2020.2
+May  7 2023
+15:10:42
+/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/IIR_filter/IIR_filter.sim/sim_1/behav/xsim/glbl.v,1683266558,verilog,,,,glbl,,,,,,,,
+/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/SatTruncFP.v,1701105375,verilog,,/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/iir.v,,SatTruncFP,,,,,,,,
+/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/iir.v,1703771377,verilog,,/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/tb_iir.v,,iir,,,,,,,,
+/mnt/sda1/Cursos/DDA/Practica/TP3/EJ1/tb_iir.v,1703700050,verilog,,,,tb_iir,,,,,,,,
