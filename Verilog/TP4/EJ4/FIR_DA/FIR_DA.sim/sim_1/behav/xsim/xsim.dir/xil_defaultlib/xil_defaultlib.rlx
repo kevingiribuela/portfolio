@@ -1,8 +1,0 @@
-0.7
-2020.2
-May  7 2023
-15:10:42
-/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/FIR_DA/FIR_DA.sim/sim_1/behav/xsim/glbl.v,1683266558,verilog,,,,glbl,,,,,,,,
-/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_DA_folded.v,1703690210,verilog,,/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_DA_unfolded.v,,fir_DA_folded,,,,,,,,
-/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_DA_unfolded.v,1703613919,verilog,,/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_tb.v,,fir_DA_unfolded,,,,,,,,
-/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_tb.v,1703692090,verilog,,,,fir_tb,,,,,,,,

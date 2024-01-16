@@ -1,8 +1,0 @@
-INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_DA_folded.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module fir_DA_folded
-INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_DA_unfolded.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module fir_DA_unfolded
-INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/fir_tb.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module fir_tb
-INFO: [VRFC 10-2263] Analyzing Verilog file "/mnt/sda1/Cursos/DDA/Practica/TP4/EJ4/FIR_DA/FIR_DA.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module glbl
