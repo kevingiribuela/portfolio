@@ -63,13 +63,13 @@ $$
 \end{align*}
 $$
 Using the same ideas as before
-$$ \tilde{x}_k = -\tilde{x}_{k0}2^0+\sum_{b=1}^{N-1}\tilde{x}_{kb}2^{-b}$$
+$$ x_k = -x_{k0}2^0+\sum_{b=1}^{N-1}x_{kb}2^{-b}$$
 so
 
 $$
 \begin{align*}
-y&=\sum_{j=0}^{4}A_j\left(-2^0\tilde{x}_{j0}+\sum_{b=1}^{N-1}2^{-b}\tilde{x}_{jb} \right)\\
-&=\sum_{j=0}^{4}-A_j\tilde{x}_{j0}+\sum_{b=1}^82^{-b}\sum_{j=0}^{4}A_j\tilde{x}_{jb}
+y&=\sum_{j=0}^{4}A_j\left(-2^0x_{j0}+\sum_{b=1}^{N-1}2^{-b}x_{jb} \right)\\
+&=\sum_{j=0}^{4}-A_jx_{j0}+\sum_{b=1}^82^{-b}\sum_{j=0}^{4}A_jx_{jb}
 \end{align*}
 $$
 
@@ -77,11 +77,11 @@ Rearranging we obtain
 
 $$
  \begin{align*}
-    &-(\tilde{x}_{00}A_0+\tilde{x}_{10}A_1+\tilde{x}_{20}A_1+\tilde{x}_{30}A_1+\tilde{x}_{40}A_4)2^0 \\
-    &+(\tilde{x}_{01}A_0+\tilde{x}_{11}A_1+\tilde{x}_{21}A_1+\tilde{x}_{31}A_1+\tilde{x}_{41}A_4)2^{-1} \\
-    &+(\tilde{x}_{02}A_0+\tilde{x}_{12}A_1+\tilde{x}_{22}A_1+\tilde{x}_{32}A_1+\tilde{x}_{42}A_4)2^{-2} \\
-    &+(\tilde{x}_{03}A_0+\tilde{x}_{13}A_1+\tilde{x}_{23}A_1+\tilde{x}_{33}A_1+\tilde{x}_{43}A_4)2^{-3} \\
-    &+(\tilde{x}_{04}A_0+\tilde{x}_{14}A_1+\tilde{x}_{24}A_1+\tilde{x}_{34}A_1+\tilde{x}_{44}A_4)2^{-4} \\
+    &-(x_{00}A_0+x_{10}A_1+x_{20}A_1+x_{30}A_1+x_{40}A_4)2^0 \\
+    &+(x_{01}A_0+x_{11}A_1+x_{21}A_1+x_{31}A_1+x_{41}A_4)2^{-1} \\
+    &+(x_{02}A_0+x_{12}A_1+x_{22}A_1+x_{32}A_1+x_{42}A_4)2^{-2} \\
+    &+(x_{03}A_0+x_{13}A_1+x_{23}A_1+x_{33}A_1+x_{43}A_4)2^{-3} \\
+    &+(x_{04}A_0+x_{14}A_1+x_{24}A_1+x_{34}A_1+x_{44}A_4)2^{-4} \\
  \end{align*}
 $$
 
