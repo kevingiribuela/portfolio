@@ -62,14 +62,17 @@ $$
     y&=A_0(x_0+x_8)+A_1(x_1+x_7)+A_2(x_2+x_6)+A_3(x_3+x_5)+A_4x_4\\
 \end{align*}
 $$
+
 Using the same ideas as before
-$$ x_k = -x_{k0}2^0+\sum_{b=1}^{N-1}x_{kb}2^{-b}$$
+
+$$ x_k = -x_{k0}2^0+\sum_{b=1}^{N-1}x_{kb}2^{-b} $$
+
 so
 
 $$
 \begin{align*}
 y&=\sum_{j=0}^{4}A_j\left(-2^0x_{j0}+\sum_{b=1}^{N-1}2^{-b}x_{jb} \right)\\
-&=\sum_{j=0}^{4}-A_jx_{j0}+\sum_{b=1}^82^{-b}\sum_{j=0}^{4}A_jx_{jb}
+&=\sum_{j=0}^{4}-A_jx_{j0}+\sum_{b=1}^82^{-b}\sum_{j=0}^{4}A_jx_{jb} \\
 \end{align*}
 $$
 
