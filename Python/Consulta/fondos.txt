@@ -3,4 +3,4 @@
 # Para conocer la abreviatura oficial, ingresa a Google Finance y busca la moneda que desees agregar.
 # !!!!!!!!!!! *************** NO MODIFIQUES LAS LINEAS DE ARRIBA **************** !!!!!!!!!!!!!!!!!!
 BTC 0.01087788
-XRP 166.53335851
+XRP 83.24
