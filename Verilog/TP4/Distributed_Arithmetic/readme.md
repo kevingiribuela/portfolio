@@ -59,7 +59,7 @@ Since the linearity in the phase filter, some operations can be reduced, such as
 $$
 \begin{align*}
     y&=A_Jx_J +  \sum_{j=0}^{J-1}A_j\left(x_j+x_{k-1-j}\right) \\ 
-    y&=A_0(x_0+x_8)+A_1(x_1+x_7)+A_2(x_2+x_6)+A_3(x_3+x_5)+A_4x_4
+    y&=A_0(x_0+x_8)+A_1(x_1+x_7)+A_2(x_2+x_6)+A_3(x_3+x_5)+A_4x_4\\
 \end{align*}
 $$
 Using the same ideas as before
