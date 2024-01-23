@@ -32,14 +32,14 @@ $$ y = -\sum_{k=0}^{K-1}x_{k0}A_k2^0+\sum_{b=1}^{N-1}2^{-b}\sum_{k=0}^{K-1}x_{kb
 
 For our case K=9 and N=8, so
 
-$$\begin{equation*}
+$$
  \begin{align*}
     &-(x_{00}A_0+x_{10}A_1+\dots+x_{80}A_8)2^0 \\
     &+(x_{01}A_0+x_{11}A_1+\dots+x_{81}A_8)2^{-1} \\
     &+\hspace{2.5cm}\vdots \\
     &+(x_{07}A_0+x_{17}A_1+\dots+x_{87}A_8)2^{-7} \\
  \end{align*}
-\end{equation*}$$
+$$
 
 Then the ROM will be of 2^K=2^9 depth. The width is calculated as
 
@@ -57,28 +57,25 @@ To test the design, the file "test.ipynb" is used to generate the testbench stim
 Since the linearity in the phase filter, some operations can be reduced, such as MAC operations. As shown in the following mathematical explanation, where K=9 and J=4
 
 $$
-\begin{equation*}
 \begin{align*}
     y&=A_Jx_J +  \sum_{j=0}^{J-1}A_j\left(x_j+x_{k-1-j}\right) \\ 
     y&=A_0(x_0+x_8)+A_1(x_1+x_7)+A_2(x_2+x_6)+A_3(x_3+x_5)+A_4x_4
 \end{align*}
-\end{equation*}
 $$
 Using the same ideas as before
 $$ \tilde{x}_k = -\tilde{x}_{k0}2^0+\sum_{b=1}^{N-1}\tilde{x}_{kb}2^{-b}$$
 so
 
 $$
-\begin{equation*}
 \begin{align*}
 y&=\sum_{j=0}^{4}A_j\left(-2^0\tilde{x}_{j0}+\sum_{b=1}^{N-1}2^{-b}\tilde{x}_{jb} \right)\\
 &=\sum_{j=0}^{4}-A_j\tilde{x}_{j0}+\sum_{b=1}^82^{-b}\sum_{j=0}^{4}A_j\tilde{x}_{jb}
 \end{align*}
-\end{equation*}$$
+$$
 
 Rearranging we obtain
 
-$$\begin{equation*}
+$$
  \begin{align*}
     &-(\tilde{x}_{00}A_0+\tilde{x}_{10}A_1+\tilde{x}_{20}A_1+\tilde{x}_{30}A_1+\tilde{x}_{40}A_4)2^0 \\
     &+(\tilde{x}_{01}A_0+\tilde{x}_{11}A_1+\tilde{x}_{21}A_1+\tilde{x}_{31}A_1+\tilde{x}_{41}A_4)2^{-1} \\
@@ -86,7 +83,7 @@ $$\begin{equation*}
     &+(\tilde{x}_{03}A_0+\tilde{x}_{13}A_1+\tilde{x}_{23}A_1+\tilde{x}_{33}A_1+\tilde{x}_{43}A_4)2^{-3} \\
     &+(\tilde{x}_{04}A_0+\tilde{x}_{14}A_1+\tilde{x}_{24}A_1+\tilde{x}_{34}A_1+\tilde{x}_{44}A_4)2^{-4} \\
  \end{align*}
-\end{equation*}$$
+$$
 
 wich yield in a ROM smaller than before.
 

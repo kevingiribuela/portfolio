@@ -33,7 +33,6 @@ Considering that each operation takes one temporal unit, the iteration period re
 
 ### Relation loop
 $$ 
-\begin{equation*}
 \begin{align*}
 L1:& \dfrac{3\ sum+ 1 \ mult}{2 \ registers} = 3/2 \\
 L2:& \dfrac{5\ sum + 1\ mult}{2 \ registers} = 3\\
@@ -42,7 +41,6 @@ L4:& \dfrac{3\ sum + 3\ mult}{6 \ registers} = 1\\
 L5:& \dfrac{4\ sum + 2 \ mult}{5 \ registers} = 6/5\\
 L6:& \dfrac{4 \ sum + 3 \ mult}{5 \ registers} = 7/5\\
 \end{align*}
-\end{equation*}
 $$
 ### The IPB
 Since the major relation loop was found with the L3 loop, the iteration period bound will be 3.5.
