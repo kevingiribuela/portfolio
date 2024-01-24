@@ -12,6 +12,7 @@ Also:
 * Input/Output parallelism 4.
 * Resolution **X** S(8,7), **h** (8,7), **Y** determined by designer.
 * All filters use the same coefficients.
+
 $$
 \begin{align*}
 h_0&=8'd0\\
