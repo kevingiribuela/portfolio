@@ -32,9 +32,10 @@ wire signed [NB_DATA-1:0]       trunc_final_sum;
 
 always @(posedge i_clk) begin
     if(i_rst) begin
-        x[0]    <= {NB_DATA{1'b0}};
         x[1]    <= {NB_DATA{1'b0}};
         x[2]    <= {NB_DATA{1'b0}};
+
+        out     <= {NB_DATA{1'b0}};
     end else begin
         x[1]    <= i_d;
         x[2]    <= x[1];
@@ -43,14 +44,16 @@ always @(posedge i_clk) begin
     end
 end
 
-assign partial_prod [0]     = i_d  * h[0];
-assign partial_prod [1]     = x[1] * h[1];
-assign partial_prod [2]     = x[2] * h[2];
+assign partial_prod [0]     = i_d  * h[0];  // (64,32) = (32,16) * (32,16)
+assign partial_prod [1]     = x[1] * h[1];  // (64,32) = (32,16) * (32,16)
+assign partial_prod [2]     = x[2] * h[2];  // (64,32) = (32,16) * (32,16)
 
-assign partial_sum1 [0]     = trunc_prod[0] + trunc_prod[1];
-assign partial_sum1 [1]     = trunc_prod[2];        // ojo aca, corregir ancho de palabra
-assign partial_sum2         = partial_sum1[0] + partial_sum1[1];
-assign partial_final_sum    = i_d - trunc_sum2;
+assign partial_sum1 [0]     = trunc_prod[0] + trunc_prod[1];            // (33,16) = (32,16) + (32,16)
+assign partial_sum1 [1]     = {trunc_prod[2][NB_DATA-1], trunc_prod[2]};// Extensión de signo: (32,16) --> (33,16)
+assign partial_sum2         = partial_sum1[0] + partial_sum1[1];        // (34,16) = (32,16) + (32,16)
+assign partial_final_sum    = i_d - trunc_sum2;                         // (33,16) = (32,16) - (32,16)
+
+assign o_data   = out;
 
 lms #(
     .NB_DATA(NB_DATA)
@@ -59,7 +62,7 @@ lms #(
     .i_rst(i_rst),
     .i_error(trunc_final_sum),
 
-    .i_x0(x[0]),
+    .i_x0(i_d),
     .i_x1(x[1]),
     .i_x2(x[2]),
 

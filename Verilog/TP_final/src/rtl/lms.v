@@ -1,5 +1,5 @@
 module lms #(
-    parameter NB_DATA = 32
+    parameter NB_DATA   =   32
 )(
     input i_clk,
     input i_rst,
@@ -11,13 +11,15 @@ module lms #(
 
     output signed [NB_DATA-1:0] o_h0,
     output signed [NB_DATA-1:0] o_h1,
-    output signed [NB_DATA-1:0] o_h2,
+    output signed [NB_DATA-1:0] o_h2
 );
 
 localparam PARTIAL_PROD = 64;
 localparam PARTIAL_SUM  = 33;
 
 wire signed [NB_DATA-1:0]       u;
+assign u = 32'h0001_8000;
+
 wire signed [PARTIAL_PROD-1:0]  partial_uxe;
 wire signed [NB_DATA-1:0]       trunc_uxe;
 
@@ -41,17 +43,23 @@ always @(posedge i_clk) begin
     end
 end
 
-assign partial_prod[0]  =   trunc_uxe * i_x0;
-assign partial_prod[1]  =   trunc_uxe * i_x1;
-assign partial_prod[2]  =   trunc_uxe * i_x2;
+assign partial_uxe      =   i_error * u;        // (64,32) = (32,16) * (32,16)
+
+assign partial_prod[0]  =   trunc_uxe * i_x0;   // (64,32) = (32,16) * (32,16)
+assign partial_prod[1]  =   trunc_uxe * i_x1;   // (64,32) = (32,16) * (32,16)
+assign partial_prod[2]  =   trunc_uxe * i_x2;   // (64,32) = (32,16) * (32,16)
 
 assign h_previous[0] = h[0];
 assign h_previous[1] = h[1];
 assign h_previous[2] = h[2];
 
-assign partial_sum[0] = trunc_prod[0] + h_previous[0];
-assign partial_sum[1] = trunc_prod[1] + h_previous[1];
-assign partial_sum[2] = trunc_prod[2] + h_previous[2];
+assign partial_sum[0] = trunc_prod[0] + h_previous[0];  // (33,16) = (32,16) + (32,16)
+assign partial_sum[1] = trunc_prod[1] + h_previous[1];  // (33,16) = (32,16) + (32,16)
+assign partial_sum[2] = trunc_prod[2] + h_previous[2];  // (33,16) = (32,16) + (32,16)
+
+assign o_h0 = h[0];
+assign o_h1 = h[1];
+assign o_h2 = h[2];
 
 generate
     genvar j;
@@ -78,5 +86,16 @@ generate
             .o_data(trunc_sum[j])
         );
     end
+
+    SatTruncFP #(
+            .NB_XI(PARTIAL_PROD),
+            .NBF_XI(NB_DATA),
+
+            .NB_XO(NB_DATA),
+            .NBF_XO(NB_DATA/2)
+        ) sat_sum (
+            .i_data(partial_uxe),
+            .o_data(trunc_uxe)
+        );
 endgenerate
 endmodule
