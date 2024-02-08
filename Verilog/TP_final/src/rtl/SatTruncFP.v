@@ -34,11 +34,10 @@ module SatTruncFP#(
 			assign	result1		=	{i_data[(NB_XI-1)],{(NB_XO-1){~i_data[NB_XI-1]}}};	// Saturation
 			assign	result2		=	{i_data[NBF_XI +: NBI_XO], aux_trunc};				// {sign, integer part, fractional part}
 			assign	aux_sat		=	condition	?	result2	:	result1;				// If ok->result2, else->sat
-		end	else begin
-			if (NBI_XO == NBI_XI)
-				assign  aux_sat = {i_data[(NB_XI-1)-:NBI_XI],aux_trunc};				// {sign + integer part, fractional part}
-			else
-				assign  aux_sat	= {{(NBI_XO - NBI_XI){i_data[NB_XI-1]}},i_data[(NB_XI-1)-:NBI_XI],aux_trunc};
+		end	else if (NBI_XO == NBI_XI) begin
+			assign  aux_sat = {i_data[(NB_XI-1)-:NBI_XI],aux_trunc};					// {sign + integer part, fractional part}
+		end else begin
+			assign  aux_sat	= {{(NBI_XO - NBI_XI){i_data[NB_XI-1]}},i_data[(NB_XI-1)-:NBI_XI],aux_trunc};
 		end
 	endgenerate
 
