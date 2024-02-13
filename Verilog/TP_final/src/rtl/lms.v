@@ -82,11 +82,11 @@ generate
 endgenerate
 
 SatTruncFP #(
-    .NB_XI(2*NB_DATA),      // 32
-    .NBF_XI((NB_DATA-1)*2), // 30   --> (32,30)
+    .NB_XI(2*NB_DATA),              // 32
+    .NBF_XI((NB_DATA-1)*2),         // 30   --> (32,30)
 
-    .NB_XO(NB_DATA),        // 16
-    .NBF_XO(NB_DATA-1)      // 15   --> (16,15)
+    .NB_XO(NB_DATA),                // 16
+    .NBF_XO(NB_DATA-1)              // 15   --> (16,15)
 ) sat_uxe (
     .i_data(partial_uxe),
     .o_data(trunc_uxe)

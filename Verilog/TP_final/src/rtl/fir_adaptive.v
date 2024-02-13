@@ -10,9 +10,9 @@ module fir_adaptive #(
     output signed [NB_DATA-1:0] o_err
 );
 
-
-reg signed [NB_DATA-1:0]        x               [1:0];
+reg signed [NB_DATA-1:0]        x               [2:0];
 reg signed [NB_DATA-1:0]        e;
+reg signed [NB_DATA-1:0]        d;
 
 wire signed [NB_DATA-1:0]       h               [2:0];
 
@@ -25,22 +25,26 @@ wire signed [NB_DATA-1:0]       trunc_sum       [2:0];
 always @(posedge i_clk) begin
     if(i_rst) begin
         e       <= {NB_DATA{1'b0}};
+        d       <= {NB_DATA{1'b0}};
         x[0]    <= {NB_DATA{1'b0}};
         x[1]    <= {NB_DATA{1'b0}};
+        x[2]    <= {NB_DATA{1'b0}};
     end else begin
         e       <= trunc_sum[2];
+        d       <= i_d;
         x[0]    <= i_x;
         x[1]    <= x[0];
+        x[2]    <= x[1];
     end
 end
 
-assign partial_prod [0]     = i_x * h[0];  // (32,30) = (16,15) * (16,15)
-assign partial_prod [1]     = x[0] * h[1];  // (32,30) = (16,15) * (16,15)
-assign partial_prod [2]     = x[1] * h[2];  // (32,30) = (16,15) * (16,15)
+assign partial_prod [0]     = x[0] * h[0];                      // (32,30) = (16,15) * (16,15)
+assign partial_prod [1]     = x[1] * h[1];                      // (32,30) = (16,15) * (16,15)
+assign partial_prod [2]     = x[2] * h[2];                      // (32,30) = (16,15) * (16,15)
 
 assign partial_sum[0]       = trunc_prod[0] + trunc_prod[1];    // (17,15) = (16,15) + (16,15)
 assign partial_sum[1]       = trunc_prod[2] + trunc_sum[0];     // (17,15) = (16,15) + (16,15)
-assign partial_sum[2]       = i_d - trunc_sum[1];               // (17,15) = (16,15) - (16,15)
+assign partial_sum[2]       = d - trunc_sum[1];                 // (17,15) = (16,15) - (16,15)
 
 assign o_err   = e;
 
@@ -52,9 +56,9 @@ lms #(
     .i_rst(i_rst),
     .i_error(trunc_sum[2]),
 
-    .i_x0(i_x),
-    .i_x1(x[0]),
-    .i_x2(x[1]),
+    .i_x0(x[0]),
+    .i_x1(x[1]),
+    .i_x2(x[2]),
 
     .o_h0(h[0]),
     .o_h1(h[1]),

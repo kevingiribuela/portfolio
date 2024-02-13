@@ -1,21 +1,23 @@
 `timescale 1ns/1ps
 `define semi_period 10
+`define latency 3
 
 module tb_fir();
 
 localparam NB_DATA   = 16;
-localparam NB_DEPTH  = 16;
+localparam NB_DEPTH  = 15;
 
 reg tb_clk, tb_rst;
 
-reg signed [NB_DATA-1:0]    x, d, out, out_reg;
+reg signed [NB_DATA-1:0]    x, d, out;
 wire signed [NB_DATA-1:0]   e;
 wire                        valid_out;
 
 reg [NB_DATA-1:0]   MIC1    [2**NB_DEPTH-1:0];
 reg [NB_DATA-1:0]   MIC2    [2**NB_DEPTH-1:0];
 reg [NB_DATA-1:0]   OUT     [2**NB_DEPTH-1:0];
-reg [NB_DEPTH-1:0]  counter;
+reg [NB_DEPTH-1:0]  counter, counter_compare;
+reg                 en_count;
 
 initial begin
     $readmemh("out.mem", OUT);
@@ -24,11 +26,13 @@ initial begin
 end
 
 initial begin
-    tb_clk = 0;
-    tb_rst = 1;
+    tb_clk          = 0;
+    tb_rst          = 1;
+    en_count        = 0;
     repeat(100) # `semi_period;
-    tb_rst = 0;
-     
+    tb_rst          = 0;
+    repeat(`latency) @(posedge tb_clk);
+    en_count        = 1;
     while(~&counter) @(posedge tb_clk);
     $finish();
 end
@@ -46,6 +50,15 @@ always @(posedge tb_clk) begin
 end
 
 always @(posedge tb_clk) begin
+    if(tb_rst)
+        counter_compare <= {NB_DEPTH{1'b0}};
+    else if(en_count)
+        counter_compare <= counter_compare + 1'b1;
+    else
+        counter_compare <= counter_compare;
+end
+
+always @(posedge tb_clk) begin
     if(tb_rst) begin
         x   <= {NB_DATA{1'b0}};
         d   <= {NB_DATA{1'b0}};
@@ -53,18 +66,11 @@ always @(posedge tb_clk) begin
     end else begin
         d   <= MIC1[counter];
         x   <= MIC2[counter];
-        out <= OUT[counter];
+        out <= OUT[counter_compare];
     end
 end
 
-always @(posedge tb_clk) begin
-    if(tb_rst)
-        out_reg <= {NB_DATA{1'b0}};
-    else
-        out_reg <= out;
-end
-
-assign valid_out = (out_reg == e);
+assign valid_out = (out == e);
 
 fir_adaptive #(
     .NB_DATA(NB_DATA)
@@ -77,4 +83,12 @@ fir_adaptive #(
 
     .o_err(e)
 );
+
+top_fir_ROM_rst #(
+    .NB_DATA(NB_DATA)
+) u_fir_v2 (
+    .i_clk(tb_clk),
+    .i_rst(tb_rst)
+);
+
 endmodule
