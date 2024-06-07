@@ -1,28 +1,48 @@
 `timescale 1ns/1ps
+//`define DEBUG       // Uncomment to view Chirp signal in the output
 `define semi_period 10
 `define latency 3
 
 module tb_fir();
 
-localparam NB_DATA   = 16;
-localparam NB_DEPTH  = 15;
+localparam NB_DATA   = 21;
+localparam NBF_DATA  = 20;
+localparam NB_DEPTH  = 14;
+
+localparam MIC1_PATH    = "mic1.mem";
+localparam MIC2_PATH    = "mic2.mem";
+localparam MU_PATH      = "mu.mem";
+localparam OUT_PATH     = "out.mem";
+
+localparam MIC1_PATH_DEBUG = "mic1_debug.mem";
+localparam MIC2_PATH_DEBUG = "mic2_debug.mem";
+localparam OUT_PATH_DEBUG  = "out_debug.mem";
 
 reg tb_clk, tb_rst;
 
-reg signed [NB_DATA-1:0]    x, d, out;
-wire signed [NB_DATA-1:0]   e;
+reg signed [NB_DATA-1:0]    mic1, mic2, out_mem, mu;
+wire signed [NB_DATA-1:0]   o_filter, o_filter_wrapper;
 wire                        valid_out;
 
 reg [NB_DATA-1:0]   MIC1    [2**NB_DEPTH-1:0];
 reg [NB_DATA-1:0]   MIC2    [2**NB_DEPTH-1:0];
 reg [NB_DATA-1:0]   OUT     [2**NB_DEPTH-1:0];
+reg [NB_DATA-1:0]   MU      [2**NB_DEPTH-1:0];
 reg [NB_DEPTH-1:0]  counter, counter_compare;
 reg                 en_count;
 
 initial begin
-    $readmemh("out.mem", OUT);
-    $readmemh("mic1.mem", MIC1);
-    $readmemh("mic2.mem", MIC2);
+`ifdef DEBUG
+    $readmemh(MIC1_PATH_DEBUG, MIC1);
+    $readmemh(MIC2_PATH_DEBUG, MIC2);
+    $readmemh(OUT_PATH_DEBUG,  OUT);
+    $readmemh(MU_PATH, MU);
+`else
+    $readmemh(MIC1_PATH, MIC1);
+    $readmemh(MIC2_PATH, MIC2);
+    $readmemh(OUT_PATH,  OUT);
+    $readmemh(MU_PATH, MU);
+`endif
 end
 
 initial begin
@@ -36,7 +56,6 @@ initial begin
     while(~&counter) @(posedge tb_clk);
     $finish();
 end
-
 always begin
     # `semi_period;
     tb_clk = ~tb_clk;
@@ -60,35 +79,46 @@ end
 
 always @(posedge tb_clk) begin
     if(tb_rst) begin
-        x   <= {NB_DATA{1'b0}};
-        d   <= {NB_DATA{1'b0}};
-        out <= {NB_DATA{1'b0}};
+        mu      <= {NB_DATA{1'b0}};
+        mic1    <= {NB_DATA{1'b0}};
+        mic2    <= {NB_DATA{1'b0}};
+        out_mem <= {NB_DATA{1'b0}};
     end else begin
-        d   <= MIC1[counter];
-        x   <= MIC2[counter];
-        out <= OUT[counter_compare];
+        mic2    <= MIC1[counter];
+        mic1    <= MIC2[counter];
+        out_mem <= OUT[counter_compare];
+        mu      <= MU[counter];
     end
 end
 
-assign valid_out = (out == e);
+assign valid_out = (out_mem == o_filter) && (out_mem == o_filter_wrapper);
 
+
+// Module without memories
 fir_adaptive #(
-    .NB_DATA(NB_DATA)
+    .NB_DATA(NB_DATA),
+    .NBF_DATA(NBF_DATA)
 ) u_fir (
-    .i_clk(tb_clk),
-    .i_rst(tb_rst),
+    .i_clk  (tb_clk  ),
+    .i_rst  (tb_rst  ),
 
-    .i_d(d),
-    .i_x(x),
+    .i_mu(mu),
+    .i_mic2 (mic2    ),
+    .i_mic1 (mic1    ),
 
-    .o_err(e)
+    .o_filter (o_filter)
 );
 
-top_fir_ROM_rst #(
-    .NB_DATA(NB_DATA)
+// Wrapper with module and memories inside
+top_fir_ROM #(
+   .NB_DATA (NB_DATA ),
+   .NBF_DATA(NBF_DATA),
+   .NB_DEPTH(NB_DEPTH)
 ) u_fir_v2 (
-    .i_clk(tb_clk),
-    .i_rst(tb_rst)
+   .i_clk   (tb_clk  ),
+   .i_rst   (tb_rst  ),
+
+   .o_filter (o_filter_wrapper)
 );
 
 endmodule
