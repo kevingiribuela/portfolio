@@ -1,0 +1,36 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Fri Jul  5 18:44:07 2024
+| Host         : kevin-Inspiron-3505 running 64-bit Ubuntu 22.04.4 LTS
+| Command      : create_slack_histogram -slack_greater_than -20 -slack_less_than 100 -significant_digits 3 -name timing_6 -num_bins 100 -file /media/kevin/DATA/Cursos/DDA/Practica/TP_final/src/report/20MHz.csv
+| Design       : top_fir_ROM
+| Device       : 7a35ti-csg324
+| Speed File   : -1L  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Slack histogram report
+
+Summary Tables
+
+
+468 items from -20.400 ns to 100.800 ns
+Setup sub-table
++-------+-----------------+-----------------+-------+------------------+
+| Index | Slack Range Min | Slack Range Max | Count | Cumulative Count |
++-------+-----------------+-----------------+-------+------------------+
+|   0   |     12.000      |     13.200      |   3   |        3         |
+|   1   |     13.200      |     14.400      |  95   |        98        |
+|   2   |     14.400      |     15.600      |  35   |       133        |
+|   3   |     15.600      |     16.800      |  71   |       204        |
+|   4   |     32.400      |     33.600      |  13   |       217        |
+|   5   |     33.600      |     34.800      |   8   |       225        |
+|   6   |     45.600      |     46.800      |  26   |       251        |
+|   7   |     46.800      |     48.000      |  74   |       325        |
+|   8   |     48.000      |     49.200      |  143  |       468        |
++-------+-----------------+-----------------+-------+------------------+
+Note: Empty ranges have been removed from the table.
+
+
+

@@ -29,9 +29,6 @@ localparam NB_PSUM  = NB_PP + 1;        // (64,60)
 localparam NBF_PSUM = NBF_PP;
 localparam NBI_PSUM = NB_PSUM-NBF_PSUM;
 
-// wire signed [NB_DATA-1:0]    u;
-// assign u = $signed(21'b0_0000_1100_1100_1100_1100);
-
 wire signed [NB_UXE-1:0]     uxe;
 
 wire signed [NB_PP-1:0]     partial_prod    [3:0];

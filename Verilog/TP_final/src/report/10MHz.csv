@@ -1,0 +1,37 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Fri Jul  5 18:36:47 2024
+| Host         : kevin-Inspiron-3505 running 64-bit Ubuntu 22.04.4 LTS
+| Command      : create_slack_histogram -slack_greater_than -20 -slack_less_than 100 -significant_digits 3 -name timing_6 -num_bins 100 -file /media/kevin/DATA/Cursos/DDA/Practica/TP_final/src/report/10MHz.csv
+| Design       : top_fir_ROM
+| Device       : 7a35ti-csg324
+| Speed File   : -1L  PRODUCTION 1.23 2018-06-13
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Slack histogram report
+
+Summary Tables
+
+
+468 items from -20.400 ns to 100.800 ns
+Setup sub-table
++-------+-----------------+-----------------+-------+------------------+
+| Index | Slack Range Min | Slack Range Max | Count | Cumulative Count |
++-------+-----------------+-----------------+-------+------------------+
+|   0   |     61.200      |     62.400      |  57   |        57        |
+|   1   |     62.400      |     63.600      |  92   |       149        |
+|   2   |     63.600      |     64.800      |  55   |       204        |
+|   3   |     80.400      |     81.600      |   3   |       207        |
+|   4   |     81.600      |     82.800      |  14   |       221        |
+|   5   |     82.800      |     84.000      |   4   |       225        |
+|   6   |     94.800      |     96.000      |  13   |       238        |
+|   7   |     96.000      |     97.200      |  52   |       290        |
+|   8   |     97.200      |     98.400      |  131  |       421        |
+|   9   |     98.400      |     99.600      |  47   |       468        |
++-------+-----------------+-----------------+-------+------------------+
+Note: Empty ranges have been removed from the table.
+
+
+

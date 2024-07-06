@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 //`define DEBUG       // Uncomment to view Chirp signal in the output
-`define semi_period 10
+`define clock_20MHz 50
 `define latency 3
 
 module tb_fir();
@@ -21,7 +21,7 @@ localparam OUT_PATH_DEBUG  = "out_debug.mem";
 reg tb_clk, tb_rst;
 
 reg signed [NB_DATA-1:0]    mic1, mic2, out_mem, mu;
-wire signed [NB_DATA-1:0]   o_filter, o_filter_wrapper;
+wire signed [NB_DATA-1:0]   o_filter;
 wire                        valid_out;
 
 reg [NB_DATA-1:0]   MIC1    [2**NB_DEPTH-1:0];
@@ -49,17 +49,19 @@ initial begin
     tb_clk          = 0;
     tb_rst          = 1;
     en_count        = 0;
-    repeat(100) # `semi_period;
+    repeat(100) # `clock_20MHz;
     tb_rst          = 0;
     repeat(`latency) @(posedge tb_clk);
     en_count        = 1;
     while(~&counter) @(posedge tb_clk);
     $finish();
 end
+
 always begin
-    # `semi_period;
+    # `clock_20MHz;
     tb_clk = ~tb_clk;
 end
+
 
 always @(posedge tb_clk) begin
     if(tb_rst)
@@ -91,7 +93,7 @@ always @(posedge tb_clk) begin
     end
 end
 
-assign valid_out = (out_mem == o_filter) && (out_mem == o_filter_wrapper);
+assign valid_out = (out_mem == o_filter);
 
 
 // Module without memories
@@ -116,9 +118,7 @@ top_fir_ROM #(
    .NB_DEPTH(NB_DEPTH)
 ) u_fir_v2 (
    .i_clk   (tb_clk  ),
-   .i_rst   (tb_rst  ),
-
-   .o_filter (o_filter_wrapper)
+   .i_rst   (tb_rst  )
 );
 
 endmodule

@@ -27,7 +27,12 @@ localparam NB_PSUM3     = NB_PSUM2 +1;          // (45,40)
 localparam NBF_PSUM3    = NBF_PSUM2;
 
 reg signed [NB_DATA-1:0]    mic1_shift_reg      [3:0];
+reg signed [NB_DATA-1:0]    mic1_shift_reg_pipe [3:0];
+
 reg signed [NB_DATA-1:0]    mic2_in;
+reg signed [NB_DATA-1:0]    mic2_in_pipe;
+
+reg signed [NB_DATA-1:0]    mu_pipe;
 
 reg signed [NB_DATA-1:0]    filter_out;
 
@@ -73,19 +78,35 @@ assign partial_sum3         = mic2_in_extended - partial_sum2;      // (45,40) =
 
 assign o_filter   = filter_out;
 
+
+always @(posedge i_clk) begin
+    if(i_rst) begin
+        mic1_shift_reg_pipe[0] <= {NB_DATA{1'b0}};
+        mic1_shift_reg_pipe[1] <= {NB_DATA{1'b0}};
+        mic1_shift_reg_pipe[2] <= {NB_DATA{1'b0}};
+        mic1_shift_reg_pipe[3] <= {NB_DATA{1'b0}};
+    end else begin
+        mic1_shift_reg_pipe[0] <= mic1_shift_reg[0];
+        mic1_shift_reg_pipe[1] <= mic1_shift_reg[1];
+        mic1_shift_reg_pipe[2] <= mic1_shift_reg[2];
+        mic1_shift_reg_pipe[3] <= mic1_shift_reg[3];
+    end
+end
+
+
 lms #(
     .NB_DATA(NB_DATA),
     .NBF_DATA(NBF_DATA)
 ) u_lms (
     .i_clk(i_clk),
     .i_rst(i_rst),
-    .i_error(trunc_sum3),
+    .i_error(filter_out),
 
     .i_mu(i_mu),
-    .i_mic1_reg0(mic1_shift_reg[0]),
-    .i_mic1_reg1(mic1_shift_reg[1]),
-    .i_mic1_reg2(mic1_shift_reg[2]),
-    .i_mic1_reg3(mic1_shift_reg[3]),
+    .i_mic1_reg0(mic1_shift_reg_pipe[0]),
+    .i_mic1_reg1(mic1_shift_reg_pipe[1]),
+    .i_mic1_reg2(mic1_shift_reg_pipe[2]),
+    .i_mic1_reg3(mic1_shift_reg_pipe[3]),
 
     .o_filter_coeff0(filter_coeff[0]),
     .o_filter_coeff1(filter_coeff[1]),
