@@ -26,9 +26,8 @@ localparam NBI_PSUM2    = NB_PSUM2-NBF_PSUM2;
 localparam NB_PSUM3     = NB_PSUM2 +1;          // (45,40)
 localparam NBF_PSUM3    = NBF_PSUM2;
 
-reg signed [NB_DATA-1:0]    mic1_shift_reg      [3:0];
+reg signed [NB_DATA-1:0]    mic1_shift_reg  [3:0];
 reg signed [NB_DATA-1:0]    mic2_in;
-
 reg signed [NB_DATA-1:0]    filter_out;
 
 wire signed [NB_DATA-1:0]   filter_coeff    [3:0];
@@ -60,10 +59,10 @@ always @(posedge i_clk) begin
     end
 end
 
-assign partial_prod[0]     = mic1_shift_reg[0] * filter_coeff[0];  // (42,40) = (21,20) * (21,20)
-assign partial_prod[1]     = mic1_shift_reg[1] * filter_coeff[1];  // (42,40) = (21,20) * (21,20)
-assign partial_prod[2]     = mic1_shift_reg[2] * filter_coeff[2];  // (42,40) = (21,20) * (21,20)
-assign partial_prod[3]     = mic1_shift_reg[3] * filter_coeff[3];  // (42,40) = (21,20) * (21,20)
+assign partial_prod [0]     = mic1_shift_reg[0] * filter_coeff[0];  // (42,40) = (21,20) * (21,20)
+assign partial_prod [1]     = mic1_shift_reg[1] * filter_coeff[1];  // (42,40) = (21,20) * (21,20)
+assign partial_prod [2]     = mic1_shift_reg[2] * filter_coeff[2];  // (42,40) = (21,20) * (21,20)
+assign partial_prod [3]     = mic1_shift_reg[3] * filter_coeff[3];  // (42,40) = (21,20) * (21,20)
 
 assign partial_sum1[0]      = partial_prod[0] + partial_prod[1];    // (43,40) = (42,40) + (42,40)
 assign partial_sum1[1]      = partial_prod[2] + partial_prod[3];    // (43,40) = (42,40) + (42,40)
@@ -72,6 +71,7 @@ assign mic2_in_extended     = $signed({{NBI_PSUM2-NBI_DATA{mic2_in[NB_DATA-1]}},
 assign partial_sum3         = mic2_in_extended - partial_sum2;      // (45,40) = (44,40) - (44,40)
 
 assign o_filter   = filter_out;
+
 
 lms #(
     .NB_DATA(NB_DATA),
